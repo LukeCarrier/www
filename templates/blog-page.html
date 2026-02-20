@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · Luke Carrier{% endblock title %}
+
+{% block content %}
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Luke Carrier</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/">Blog</a>
+    </nav>
+    <header class="page-header">
+        <h1 class="title">{{ page.title }}</h1>
+        {% if page.date %}
+            <p class="subtitle">{{ page.date }}</p>
+        {% endif %}
+    </header>
+    <article class="card prose">
+        {{ page.content | safe }}
+    </article>
+{% endblock content %}

@@ -25,10 +25,11 @@ jobs:
       - name: Build
         uses: getzola/github-pages@v1
         with:
-          zola_version: v0.22.1
+          zola_version: v0.21.0
 
   deploy:
     name: Deploy
+    needs: [build]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
