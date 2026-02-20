@@ -24,12 +24,12 @@ endblock title %} {% block content %}
             <ul>
                 {% for h1 in page.toc %}
                 <li>
-                    <a href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
+                    <a class="toc-link" href="{{ h1.permalink | safe }}">{{ h1.title }}</a>
                     {% if h1.children %}
                     <ul>
                         {% for h2 in h1.children %}
                         <li>
-                            <a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+                            <a class="toc-link" href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
                         </li>
                         {% endfor %}
                     </ul>
@@ -40,6 +40,47 @@ endblock title %} {% block content %}
         </div>
     </aside>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const tocLinks = Array.from(document.querySelectorAll(".toc-link"));
+        const headings = tocLinks
+            .map((link) => {
+                const id = decodeURIComponent(link.hash || "").replace("#", "");
+                if (!id) return null;
+                return document.getElementById(id);
+            })
+            .filter(Boolean);
+
+        if (headings.length === 0) return;
+
+        const activate = (heading) => {
+            tocLinks.forEach((link) => {
+                link.classList.toggle(
+                    "is-active",
+                    decodeURIComponent(link.hash).replace("#", "") === heading.id
+                );
+            });
+        };
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visible = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+                if (visible.length > 0) {
+                    activate(visible[0].target);
+                }
+            },
+            {
+                rootMargin: "-20% 0px -60% 0px",
+                threshold: [0.1, 0.2, 0.4, 0.6]
+            }
+        );
+
+        headings.forEach((heading) => observer.observe(heading));
+        activate(headings[0]);
+    });
+</script>
 {% else %}
 <article class="card prose">
     {{ page.content | safe }}
