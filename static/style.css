@@ -7,9 +7,12 @@ body {
     min-height: 100svh;
     display: grid;
     place-items: center;
+    padding: 0 clamp(15px, 4vw, 32px);
     background: linear-gradient(180deg, #0f1024, #07070c);
     color: #f4f4f6;
     font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 1.12rem;
+    line-height: 1.95;
     letter-spacing: 0.01em;
     text-align: center;
     position: relative;
@@ -108,7 +111,7 @@ body::before {
 .page {
     display: grid;
     gap: 20px;
-    padding: 48px 20px;
+    padding: 48px 0;
     width: min(960px, 100%);
     z-index: 1;
 }
@@ -173,7 +176,7 @@ h6 {
 p {
     margin: 0;
     color: #b6b7c2;
-    font-size: 1rem;
+    font-size: inherit;
 }
 .hero-tagline {
     font-family: "Michroma", sans-serif;
@@ -298,7 +301,82 @@ svg {
 }
 .prose {
     text-align: left;
-    line-height: 1.7;
+    line-height: 2.05;
+}
+.post-layout {
+    display: grid;
+    gap: 24px;
+}
+.toc {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    order: -1;
+}
+.toc-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.toc-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244, 244, 246, 0.85);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    justify-self: start;
+}
+.toc-label:hover {
+    border-color: rgba(122, 255, 184, 0.5);
+    box-shadow: 0 10px 26px rgba(122, 255, 184, 0.2);
+}
+.toc-panel {
+    display: none;
+    gap: 12px;
+    padding: 22px;
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+}
+.toc-toggle:checked + .toc-label + .toc-panel {
+    display: grid;
+}
+.toc-title {
+    font-family: "Michroma", sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0;
+}
+.toc-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+}
+.toc-panel ul ul {
+    padding-left: 16px;
+    gap: 8px;
+}
+.toc-panel li {
+    display: grid;
+    gap: 6px;
+}
+.toc-panel a {
+    color: rgba(122, 255, 184, 0.85);
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+.toc-panel a:hover {
+    color: rgba(122, 255, 184, 1);
 }
 .prose h2,
 .prose h3,
@@ -329,5 +407,23 @@ svg {
     .list li {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+@media (min-width: 900px) {
+    .post-layout {
+        grid-template-columns: minmax(0, 1fr) 280px;
+        align-items: start;
+    }
+    .toc {
+        order: 0;
+        position: sticky;
+        top: 24px;
+        align-self: start;
+    }
+    .toc-label {
+        display: none;
+    }
+    .toc-panel {
+        display: grid;
     }
 }
