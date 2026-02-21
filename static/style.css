@@ -14,6 +14,7 @@ body {
     display: grid;
     place-items: center;
     padding: 0 clamp(15px, 4vw, 32px);
+    --page-gutter: clamp(15px, 4vw, 32px);
     background: linear-gradient(180deg, #0f1024, #07070c);
     color: #f4f4f6;
     font-family: "Helvetica Neue", Arial, sans-serif;
@@ -393,6 +394,9 @@ p {
     gap: 24px;
     min-width: 0;
 }
+.post-layout > * {
+    min-width: 0;
+}
 .toc {
     display: grid;
     gap: 12px;
@@ -534,6 +538,27 @@ p {
     padding: 2px 6px;
     border-radius: 6px;
 }
+.prose .mermaid,
+.prose pre.mermaid {
+    display: block;
+    width: 100%;
+    max-width: calc(100vw - (var(--page-gutter) * 2));
+    margin: 24px auto;
+    box-sizing: border-box;
+    overflow-x: auto;
+    padding: 0;
+    background: transparent;
+    min-width: 0;
+    max-inline-size: 100%;
+}
+.prose .mermaid svg,
+.prose pre.mermaid svg {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
 .prose table {
     width: 100%;
     border-collapse: collapse;
@@ -543,6 +568,9 @@ p {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     overflow: hidden;
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
 }
 .prose thead {
     background: rgba(255, 255, 255, 0.06);
@@ -597,6 +625,54 @@ kbd {
     }
     .prose .zola-anchor {
         display: none;
+    }
+}
+@media (max-width: 430px) {
+    body {
+        font-size: 1.02rem;
+        line-height: 1.8;
+    }
+    .page {
+        gap: 16px;
+        padding: 36px 0;
+    }
+    .hero {
+        gap: 14px;
+    }
+    .hero-tagline {
+        font-size: 1rem;
+    }
+    .links {
+        gap: 12px;
+    }
+    .icon-link {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+    }
+    .icon-link svg {
+        width: 20px;
+        height: 20px;
+    }
+    .title {
+        font-size: clamp(2rem, 9.5vw, 2.8rem);
+    }
+    .card {
+        padding: 16px;
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+    }
+    .list ul {
+        gap: 12px;
+    }
+    .breadcrumbs {
+        font-size: 0.6rem;
+        letter-spacing: 0.16em;
+    }
+    .toc-label {
+        padding: 6px 12px;
+        font-size: 0.65rem;
     }
 }
 @media (min-width: 900px) {
